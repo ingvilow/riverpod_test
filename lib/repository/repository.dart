@@ -41,7 +41,7 @@ class Repository extends ChangeNotifier {
         id: 3,
         creator: 'creator1'),
     PostsModel(
-        title: '1914 года, H. Rackham',
+        title: '1914 years, H. Rackham',
         text:
             'On the other hand, we denounce with righteous indignation and dislike men ',
         id: 4,

@@ -5,6 +5,8 @@ import 'package:riverpod_test/models/posts_model.dart';
 import 'package:riverpod_test/repository/repository.dart';
 import 'package:riverpod_test/theme/theme_color.dart';
 
+final listsPosts = Provider((_) => Repository().posts);
+
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
 
@@ -23,16 +25,31 @@ class HomePage extends HookConsumerWidget {
         itemBuilder: (context, index) {
           return Card(
             color: ThemeColors.secondColor,
-            child: ListTile(
-                title: Text(value[index].title ?? ''),
-                subtitle: Text(value[index].text ?? ''),
+            child: InkWell(
+              onTap: (){
+
+              },
+              child: ListTile(
+                title: Text(
+                  value[index].title ?? '',
+                  style: TextStyle(
+                      fontFamily: "CormorantGaramond",
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  value[index].text ?? '',
+                  style: TextStyle(fontFamily: "CormorantGaramond", fontSize: 16),
+                ),
                 trailing: IconButton(
                   icon: const Icon(
                     Icons.favorite_outlined,
                     color: ThemeColors.iconsColor,
                   ),
                   onPressed: () {},
-                )),
+                ),
+              ),
+            ),
           );
         },
       ),
@@ -52,7 +69,11 @@ class HomePage extends HookConsumerWidget {
             ),
             Text(
               'Tap to write',
-              style: TextStyle(fontSize: 14, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                  fontFamily: "CormorantGaramond",
+                  fontWeight: FontWeight.bold),
             )
           ],
         ),

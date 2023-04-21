@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:riverpod_test/models/posts_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-final sqlServiceProvider = ChangeNotifierProvider((ref) => SQLService());
+class SQLService {
+/*  static final SQLService db = SQLService._();
 
-class SQLService extends ChangeNotifier {
-  Future <Database> initializeDB() async {
+  SQLService._();*/
+
+  List<Map<String, Object?>> queryResult = [{}];
+  Future<Database> initializeDB() async {
     String path = await getDatabasesPath();
 
     return openDatabase(
@@ -20,24 +21,37 @@ class SQLService extends ChangeNotifier {
     );
   }
 
-  Future<int> createItem(PostsModel model) async {
-    int result = 0;
-    Database db = await initializeDB();
-    final id = await db.insert('PostsModel', model.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-    throw Exception("e");
-  }
-
-  Future<List<PostsModel>>? getPosts() async {
+  Future<List<PostsModel>> allPosts() async {
     final db = await initializeDB();
-    final List<Map<String, Object?>> queryResult =
-        await db.query('PostsModel');
-    print(queryResult);
+     queryResult = await db.query('PostsModel');
     return queryResult.map((e) => PostsModel.fromMap(e)).toList();
   }
 
- /* void deletePosts() async{
 
-  }*/
+  Future<void> deletePosts(int id) async {
+    final db = await initializeDB();
+    await db.delete(
+      'PostsModel',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 
+  Future<PostsModel> insertPosts(PostsModel postsModel) async {
+    Database db = await initializeDB();
+    await db.insert('PostsModel', postsModel.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    print(postsModel.toMap());
+    throw UnimplementedError();
+  }
+
+  Future<void> updatePosts(PostsModel postsModel) async {
+    final db = await initializeDB();
+    await db.update(
+      'PostsModel',
+      postsModel.toMap(),
+      where: 'id = ?',
+      whereArgs: [postsModel.id],
+    );
+  }
 }

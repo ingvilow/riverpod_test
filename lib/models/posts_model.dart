@@ -1,17 +1,15 @@
 class PostsModel {
-  PostsModel(
-      {required this.title,
-      required this.text,
-      required this.id,
-      required this.creator});
+  PostsModel({required this.title,
+    required this.text,
+    required this.id
+  });
   final String? title;
   final String? text;
   final int? id;
-  final String? creator;
 
   PostsModel.fromMap(Map<String, dynamic> item):
-        id=item["id"], title= item["title"],  text = item[""], creator=item["creator"];
+        id=item["id"], title= item["title"],  text = item["text"];
 
   Map<String, Object> toMap(){
-    return {'id':id ?? 0,'description': title ?? '', 'text':text ?? '', 'creator': creator ?? ''};
+    return {'id':id ?? 0,'title': title ?? 'title', 'text':text ?? ''};
 }}

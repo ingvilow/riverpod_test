@@ -16,6 +16,7 @@ class DBProvider extends StateNotifier<PostsState> {
 
 
   Future<PostsState> getAllPosts() async {
+    await sqlService.initializeDB();
     state = PostsLoading();
     try {
       final posts = await sqlService.allPosts();
@@ -33,6 +34,7 @@ class DBProvider extends StateNotifier<PostsState> {
 
 
   Future<PostsState>? addPosts(String text, String title) async {
+    await sqlService.initializeDB();
     state = PostsLoading();
     PostsModel postsModel = PostsModel(title: title, text: text, id: 0);
     try {

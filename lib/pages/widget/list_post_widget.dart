@@ -30,7 +30,7 @@ class ListPost extends ConsumerWidget {
       data: (posts) => RefreshIndicator(
         onRefresh: () { return refreshFunc.refreshPosts(); },
         child: ListView.builder(
-          itemCount: postsModel.length,
+          itemCount: /*postsModel?.length != null  ?*/ posts.length,
           itemBuilder: (context, index) {
             return Card(
               color: ThemeColors.secondColor,
@@ -38,14 +38,14 @@ class ListPost extends ConsumerWidget {
                 onTap: () {},
                 child: ListTile(
                   title: Text(
-                    postsModel[index].title ?? '',
+                    /*postsModel[index].title ??*/ posts[index].title!,
                     style: const TextStyle(
                         fontFamily: "CormorantGaramond",
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    postsModel[index].text ?? '',
+                    /*postsModel[index].text ??*/ posts[index].text!,
                     style: const TextStyle(
                         fontFamily: "CormorantGaramond", fontSize: 16),
                   ),

@@ -16,6 +16,7 @@ class SQLService {
       onCreate: (database, version) async {
         await database.execute(
             "CREATE TABLE PostsModel(id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT NOT NULL, title TEXT NOT NULL)");
+        print(database);
       },
       version: 1,
     );
@@ -24,6 +25,8 @@ class SQLService {
   Future<List<PostsModel>> allPosts() async {
     final db = await initializeDB();
      queryResult = await db.query('PostsModel');
+     print('query result');
+     print(queryResult);
     return queryResult.map((e) => PostsModel.fromMap(e)).toList();
   }
 
